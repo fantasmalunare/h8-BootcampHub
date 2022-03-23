@@ -1,32 +1,32 @@
 [
    {
-      "BootcampId": "1",
       "fee": 35000000,
-      "duration": 120
+      "duration": 120,
+      "studentLimit": 30
    },
    {
-      "BootcampId": "2",
       "fee": 20000000,
-      "duration": 90
+      "duration": 90,
+      "studentLimit": 20
    },
    {
-      "BootcampId": "3",
       "fee": 27000000,
-      "duration": 180
+      "duration": 180,
+      "studentLimit": 10
    },
    {
-      "BootcampId": "4",
       "fee": 12500000,
-      "duration": 60
+      "duration": 60,
+      "studentLimit": 12
    },
    {
-      "BootcampId": "5",
       "fee": 9999999,
-      "duration": 180
+      "duration": 180,
+      "studentLimit": 15
    },
    {
-      "BootcampId": "6",
       "fee": 50000000,
-      "duration": 30
+      "duration": 30,
+      "studentLimit": 5
    }
 ]

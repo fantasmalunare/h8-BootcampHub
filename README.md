@@ -28,7 +28,7 @@ ____________________________________
 
 ## Release 1
 1. Buat relasi dengan menambahkan FK di add column TAMBAHAN (migration).
-2. Add column FK **BootcampDetailsId** di tabel **Bootcamps**
+2. Add column FK **BootcampDetailId** di tabel **Bootcamps**
 
    ON CASCADE ON UPDATE
 ____________________________________

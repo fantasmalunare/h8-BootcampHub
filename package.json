@@ -2,7 +2,7 @@
   "name": "h8-bootcamphub",
   "version": "1.0.0",
   "description": "Hactiv8's Phase 1 Pair Project",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/fantasmalunare/h8-BootcampHub.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Hardy Uttamo Wirawan & Edgar Dimas",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/fantasmalunare/h8-BootcampHub/issues"

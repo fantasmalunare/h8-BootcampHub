@@ -1,26 +1,32 @@
 [
    {
       "name": "Dewa Coding",
-      "category": "Tech"
+      "category": "Tech",
+      "BootcampDetailId": "1"
    },
    {
       "name": "Hackaccounting",
-      "category": "Finance"
+      "category": "Finance",
+      "BootcampDetailId": "2"
    },
    {
       "name": "Academia++",
-      "category": "Academic"
+      "category": "Academic",
+      "BootcampDetailId": "3"
    },
    {
       "name": "Master Syep Gaskeun",
-      "category": "Cooking"
+      "category": "Cooking",
+      "BootcampDetailId": "4"
    },
    {
       "name": "Hyper Les Pasti Bisa",
-      "category": "Academic"
+      "category": "Academic",
+      "BootcampDetailId": "5"
    },
    {
       "name": "Crazy Rich Bootcamp",
-      "category": "Finance"
+      "category": "Finance",
+      "BootcampDetailId": "6"
    }
 ]
