@@ -1,0 +1,32 @@
+[
+   {
+      "BootcampId": "1",
+      "fee": 35000000,
+      "duration": 120
+   },
+   {
+      "BootcampId": "2",
+      "fee": 20000000,
+      "duration": 90
+   },
+   {
+      "BootcampId": "3",
+      "fee": 27000000,
+      "duration": 180
+   },
+   {
+      "BootcampId": "4",
+      "fee": 12500000,
+      "duration": 60
+   },
+   {
+      "BootcampId": "5",
+      "fee": 9999999,
+      "duration": 180
+   },
+   {
+      "BootcampId": "6",
+      "fee": 50000000,
+      "duration": 30
+   }
+]
