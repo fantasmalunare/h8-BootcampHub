@@ -16,7 +16,12 @@ class Controller {
 
         User.create((obj))
         .then(() => res.redirect('/login'))
-        .catch(err => res.send(err))
+        .catch(err => {
+            if(err.name === 'SequelizeValidationError') {
+               err = err.errors.map(e => e.message)
+            }
+            res.send(err);
+         })
     }
 
     static login(req, res){
@@ -52,31 +57,45 @@ class Controller {
 
     static bootcamps (req, res){
         const access = req.session.userRole;
+        const {search} = req.query;
 
-        Bootcamp.findAll()
-        .then(data => res.render('bootcamps', {data, access}))
-        .catch(err => res.send(err))
+        if (search) {
+            Bootcamp.findAll({where: {name: {[Op.iLike]: `%${search}%`}}})
+            .then(data => res.render('bootcamps', {data, access}))
+            .catch(err => res.send(err))
+        } else {
+            Bootcamp.withoutSearch()
+            .then(data => res.render('bootcamps', {data, access}))
+            .catch(err => res.send(err))
+        }
     }
 
     static bootcampsAdd(req, res){
-        let {err} = req.query;
         res.render('formAddBootcamp');
     }
 
     static bootcampsAdd2(req, res){
-        console.log(req.body)
-        const {} = req.body
-        const obj = {
+        const {name, category, fee, duration, studentLimit } = req.body;
 
-        }
-        Bootcamp.create(obj)
+        BootcampDetail.create({fee, duration, studentLimit})
         .then(() => {
-            res.redirect('/')
+            return BootcampDetail.findAll({
+                limit: 1,
+                order: [['createdAt', 'DESC']]
+            })
         })
+        .then(data => {
+            const BootcampDetailId = data[0].id;
+
+            return Bootcamp.create({name, category, BootcampDetailId})
+        })
+        .then(() => res.redirect('/bootcamps'))
         .catch(err => {
-            console.log(err)
-            res.send(err)
-        })
+            if(err.name === 'SequelizeValidationError') {
+               err = err.errors.map(e => e.message)
+            }
+            res.send(err);
+         })
     }
 
     static bootcampsIdDetail (req, res){
@@ -88,46 +107,53 @@ class Controller {
         .catch(err => res.send(err))
     }
 
-    static bootcampsIdDel (req, res){
-        console.log('bootcamps controller')
-        const id = req.params.id
-        Bootcamp.delete()
-        .then(() => {
-            res.redirect('/bootcamps')
+    static bootcampsIdEdit (req,res) {
+        const {BootcampId} = req.params;
+        const {err} = req.query;
+        Bootcamp.findByPk(BootcampId, {
+            include:BootcampDetail,
+            required: true
+        })
+        .then(data => {
+            res.render('formEditBootcamp', {data})
         })
         .catch(err => {
-            console.log(err)
-            res.send(err)
-        })
-        
-    }
-
-    static bootcampsIdEdit (req, res){
-        console.log('bootcamps controller')
-        const id = req.params.id
-        res.render('formEditBootcamp')
-        
-    }
-
-    static bootcampsIdEdit2 (req, res){
-        console.log('bootcamps controller')
-        const id = req.params.id
-        console.log(req.body)
-        const {} = req.body
-        obj = {
-
-        }
-        Bootcamp.update(obj, {
-            where: {
-                id:id
+            if(err.name === 'SequelizeValidationError') {
+               err = err.errors.map(e => e.message)
             }
-        })
+            res.send(err);
+         })
+    }
+       
+    static bootcampsIdEdit2 (req, res){
+        const {name, category, fee, duration, studentLimit } = req.body;
+        const { BootcampId } = req.params;
+
+        BootcampDetail.update(
+            {fee, duration, studentLimit},
+            {where: {id: BootcampId}}
+        )
         .then(() => {
-            res.redirect('/bootcamps')
+            return Bootcamp.update(
+                {name, category},
+                {where: {BootcampDetailId: BootcampId}}
+            )
         })
+        .then(() => res.redirect(`/bootcamps/${BootcampId}/detail`))
         .catch(err => {
-            res.send(err)
-        })
+            if(err.name === 'SequelizeValidationError') {
+               err = err.errors.map(e => e.message)
+            }
+            res.send(err);
+         })
+    }
+
+    static delete(req, res){
+        const {BootcampId} = req.params;
+        
+        BootcampDetail.destroy({where: {id:BootcampId}})
+        .then(()=> res.redirect('/bootcamps'))
+        .catch(err => res.send(err))
     }
 }
 

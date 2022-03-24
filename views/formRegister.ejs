@@ -26,5 +26,18 @@
         <br><br>
         <input type="submit" value="Submit">
     </form>
+    <table border="1">
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+         
+        </tr>
+        <%data.forEach(e => {%>
+        <tr>
+          <td><%=e.name%></td>
+          <td><%=e.category%></td>
+        </tr>
+        <%})%>
+      </table>
 </body>
 </html>

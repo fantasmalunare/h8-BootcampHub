@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       Bootcamp.belongsTo(models.BootcampDetail, {foreignKey: 'BootcampDetailId'});
       Bootcamp.hasMany(models.User, {foreginKey: 'BootcampId'});
     }
+
+    static withoutSearch() {
+      return Bootcamp.findAll()
+    }
   }
   Bootcamp.init({
     name: {

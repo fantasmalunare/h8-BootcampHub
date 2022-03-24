@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     formatDuration () {
-      let month = this.duration / 30;
+      let month = Math.floor(this.duration / 30);
       let day = this.duration % 30;
 
       if (month < 1) return `${day} day(s)`;
