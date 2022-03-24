@@ -15,8 +15,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Bootcamp.init({
-    name: DataTypes.STRING,
-    category: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {msg: 'bootcamp name is required'}
+      }
+    },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {msg: 'category is required'}
+      }
+    }
   }, {
     sequelize,
     modelName: 'Bootcamp',

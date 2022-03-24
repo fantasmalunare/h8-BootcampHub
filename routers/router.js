@@ -16,16 +16,20 @@ router.use(function (req, res, next) {
 
 router.get('/logout', Controller.logout);
 
-router.get('/bootcamps', Controller.bootcamps)
+const fn = function(req, res, next) {
+   req.session.userRole === 'admin' ? next() : res.redirect('/bootcamps')
+}
 
-router.get('/bootcamps/add', Controller.bootcampsAdd)
-router.post('/bootcamps/add', Controller.bootcampsAdd2)
+router.get('/bootcamps', Controller.bootcamps);
 
-router.get('/bootcamps/:BootcampId/delete', Controller.bootcampsIdDel)
+router.get('/bootcamps/add', fn, Controller.bootcampsAdd)
+router.post('/bootcamps/add', fn, Controller.bootcampsAdd2)
 
-router.get('/bootcamps/:BootcampId/detail', Controller.bootcampsIdDetail)
+router.get('/bootcamps/:BootcampId/delete', fn, Controller.bootcampsIdDel)
 
-router.get('/bootcamps/:BootcampId/edit', Controller.bootcampsIdEdit)
-router.post('/bootcamps/:BootcampId/edit', Controller.bootcampsIdEdit2)
+router.get('/bootcamps/:BootcampId/detail', Controller.bootcampsIdDetail);
+
+router.get('/bootcamps/:BootcampId/edit', fn, Controller.bootcampsIdEdit)
+router.post('/bootcamps/:BootcampId/edit', fn, Controller.bootcampsIdEdit2)
 
 module.exports = router

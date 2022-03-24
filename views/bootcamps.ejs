@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <%- include('./partials/header')%> 
-    <form id="form"> 
-        <input type="search" id="query" name="search" placeholder="Search bootcamp...">
-        <button>Search</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bootcamp List</title>
+  </head>
+  <body>
+    <%- include('./partials/header')%>
+    <form action="/bootcamps?" method="GET">
+      <label>Search Name:</label>
+      <input type="search" name="search" placeholder="Search name..." />
+      <button>Search</button>
     </form>
-
-    <table border = "1">
-        <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Detail</th>
-        </tr>
-        <%data.forEach(x => {%>
-            <tr>
-              <td><%=x.name%></td>
-              <td><%=x.category%></td>
-              <td><a href="/bootcamps/<%=x.BootcampDetailId%>/detail"><button>detail</button></a></td>
-            </tr>
-        <%})%>
-      </table>
-</body>
+    <table border="1">
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Detail</th>
+      </tr>
+      <%data.forEach(e => {%>
+      <tr>
+        <td><%=e.name%></td>
+        <td><%=e.category%></td>
+        <td>
+          <a href="/bootcamps/<%=e.BootcampDetailId%>/detail"
+            ><button>detail</button></a>
+        </td>
+      </tr>
+      <%})%>
+    </table>
+    <br><br>
+    <% if (access === 'admin') { %>
+        <a href="/bootcamps/add"><button>ADD BOOTCAMP</button></a>
+    <% } %>
+  </body>
 </html>

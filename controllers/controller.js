@@ -1,6 +1,7 @@
 const {Op} = require('sequelize');
 const {Bootcamp, BootcampDetail, User } = require('../models');
 const bcryptjs = require('bcryptjs');
+const mvp = require('../helper/accounting');
 
 class Controller {
     static register(req, res) {
@@ -10,10 +11,8 @@ class Controller {
     }
 
     static register2(req, res){
-        console.log("req.body: ", req.body);
         const {username, email, password, bootcamp} = req.body;
         const obj = {username, email, password, BootcampId:bootcamp}
-        console.log("obj: ", obj);
 
         User.create((obj))
         .then(() => res.redirect('/login'))
@@ -26,8 +25,7 @@ class Controller {
     }
 
     static login2(req, res){
-        const {username, password} = req.body
-        const err = []
+        const {username, password} = req.body;
 
         User.findOne({where:{username}})
         .then(data => {
@@ -37,6 +35,7 @@ class Controller {
                 const isValid = bcryptjs.compareSync(password, data.password)
                 if (isValid){
                     req.session.userId = data.id;
+                    req.session.userRole = data.role;
                     res.redirect('/bootcamps');
                 } else {
                     res.redirect('/login?err=username/password is invalid')
@@ -52,18 +51,19 @@ class Controller {
     }
 
     static bootcamps (req, res){
+        const access = req.session.userRole;
+
         Bootcamp.findAll()
-        .then(data => res.render('bootcamps', {data}))
+        .then(data => res.render('bootcamps', {data, access}))
         .catch(err => res.send(err))
     }
-//!--------------------
+
     static bootcampsAdd(req, res){
-        console.log('bootcamps add controller')
-        res.render('formAddBootcamp')
+        let {err} = req.query;
+        res.render('formAddBootcamp');
     }
 
     static bootcampsAdd2(req, res){
-        console.log('bootcamps add 2 controller')
         console.log(req.body)
         const {} = req.body
         const obj = {
@@ -80,17 +80,12 @@ class Controller {
     }
 
     static bootcampsIdDetail (req, res){
-        console.log('bootcamps controller')
-        const id = req.params.id
-        Bootcamp.findByPk(id)
-        .then(data => {
-            res.render('bootcampDetail', {data})
-        })
-        .catch(err => {
-            console.log(err)
-            res.render(err)
-        })
-        
+        const {BootcampId} = req.params;
+        const access = req.session.userRole;
+
+        Bootcamp.findByPk(BootcampId, {include: BootcampDetail})
+        .then(data => res.render('bootcampDetail', {data, access, mvp}))
+        .catch(err => res.send(err))
     }
 
     static bootcampsIdDel (req, res){

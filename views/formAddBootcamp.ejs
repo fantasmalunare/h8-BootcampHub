@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <%- include('./partials/header.ejs')%> 
-    <h1>Form Add bootcamp</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Bootcamp</title>
+  </head>
+  <body>
+    <h1>Form Add Bootcamp</h1>
+    <form action="/bootcamps/add" method="POST">
+      <label for="name">Bootcamp Name:</label>
+      <input type="text" name="name" placeholder="bootcamp name">
+      <br>
+      <label for="name">Category:</label>
+      <select name="category">
+          <option value="" disabled selected>-select one-</option>
+          <option value="Tech">Tech</option>
+          <option value="Finance">Finance</option>
+          <option value="Academic">Academic</option>
+          <option value="Cooking">Cooking</option>
+      <br>
+      <label for="fee">Fee:</label>
+      <input type="number" name="fee" min="0">
+      <br>
+      <label for="duration">Duration (days):</label>
+      <input type="number" name="duration" min="0">
+      <br>
+      <label for="studentLimit">Student Limit:</label>
+      <input type="number" name="studentLimit" min="0">
+      <br>
+    </form>
+
+    <%if(err){%>
+    <p style="color: red"><%=err%></p>
+    <%}%>
+  </body>
 </html>
