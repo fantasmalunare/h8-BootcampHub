@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.belongsTo(models.Bootcamp, {foreignKey: 'BootcampId'});
     }
   }
   User.init({
@@ -44,12 +44,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-      notNull: {
-        msg: 'role is required'
-       }
-      } 
+      // allowNull: false,
+      // validate: {
+      // notNull: {
+      //   msg: 'role is required'
+      //  }
+      // } 
     },
     BootcampId: {
       type: DataTypes.INTEGER,
@@ -63,10 +63,16 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate(instance, options){
-        console.log(instance, '<<< di beforeCreate');
         var salt = bcryptjs.genSaltSync(10);
         var hash = bcryptjs.hashSync(instance.password, salt);
         instance.password = hash
+
+        const emailDomain = instance.email.slice(-10)
+        if(emailDomain === '@admin.com'){
+          instance.role = 'admin'
+        } else {
+          instance.role = 'student'
+        }
       }
     },
     sequelize,

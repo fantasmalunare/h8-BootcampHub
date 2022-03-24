@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Bootcamp.belongsTo(models.BootcampDetail, {foreignKey: 'BootcampDetailId'});
+      Bootcamp.hasMany(models.User, {foreginKey: 'BootcampId'});
     }
   }
   Bootcamp.init({

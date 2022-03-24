@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form id="form"> 
+        <input type="search" id="query" name="search" placeholder="Search bootcamp...">
+        <button>Search</button>
+    </form>
+
+    <table border = "1">
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Detail</th>
+        </tr>
+        <%data.forEach(x => {%>
+            <tr>
+              <td><%=x.name%></td>
+              <td><%=x.category%></td>
+              <td><a href="/bootcamps/<%=x.BootcampDetailId%>/detail"><button>detail</button></a></td>
+            </tr>
+        <%})%>
+      </table>
+</body>
+</html>
