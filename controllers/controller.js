@@ -12,12 +12,7 @@ class Controller {
     static register2(req, res){
         console.log("req.body: ", req.body);
         const {username, email, password, bootcamp} = req.body;
-        const obj = {
-            username:username,
-            email:email,
-            password:password,
-            BootcampId:bootcamp
-        }
+        const obj = {username, email, password, BootcampId:bootcamp}
         console.log("obj: ", obj);
 
         User.create((obj))
@@ -49,6 +44,11 @@ class Controller {
             }
         })
         .catch(err => res.send(err))
+    }
+
+    static logout (req, res) {
+        req.session.destroy;
+        res.redirect('/');
     }
 
     static bootcamps (req, res){

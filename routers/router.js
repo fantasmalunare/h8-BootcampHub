@@ -14,6 +14,8 @@ router.use(function (req, res, next) {
    !req.session.userId ? res.redirect('/login?err=please login first') : next()
 })
 
+router.get('/logout', Controller.logout);
+
 router.get('/bootcamps', Controller.bootcamps)
 
 router.get('/bootcamps/add', Controller.bootcampsAdd)
